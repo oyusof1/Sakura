@@ -1,92 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>xijkstra</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js" integrity="sha512-Siyxh4gyNM5SaERNa9BOZSPcu/auHyFUWn9OVFD7MxI3/dVPQklE7tfqS+pLmPHF1zo6UdDaJAp/thihrf0c7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-</head>
-<style>
-    #container {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"
+      integrity="sha512-Siyxh4gyNM5SaERNa9BOZSPcu/auHyFUWn9OVFD7MxI3/dVPQklE7tfqS+pLmPHF1zo6UdDaJAp/thihrf0c7w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <style>
+    body {
+      overflow: hidden;
+      background-color: antiquewhite;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+    }
+
+    #pianocontainer {
+      position: absolute;
+      top: 75%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .effectscontainer {
+      display: inline-flex;
     }
 
     .whitenote {
-        display: flex;
-        width: 50px;
-        height: 100px;
-        background-color: white;
-        border: 1px solid;
-        float: left;
-        text-align: left;
-        padding: 1rem;
-        align-items: flex-end;
+      display: flex;
+      width: 50px;
+      height: 100px;
+      background-color: white;
+      border: 1px solid;
+      float: left;
+      text-align: left;
+      padding: 1rem;
+      align-items: flex-end;
     }
 
     .blacknote {
-        display: flex;
-        padding: 10px;
-        color: white;
-        position: relative;
-        left: 3em;
-        bottom: 2.3rem;
-        z-index: 1;
-        width: 50px;
-        height: 60px;
-        background-color: black;;
-        align-items: flex-end;
+      display: flex;
+      padding: 10px;
+      color: white;
+      position: relative;
+      left: 3em;
+      bottom: 2.3rem;
+      z-index: 1;
+      width: 50px;
+      height: 60px;
+      background-color: black;
+      align-items: flex-end;
     }
-</style> 
-<body>
-    <div id="container"></div>
-</body>
 
-<script>
+    datalist {
+      display: flex;
+      flex-direction: row;
+    }
+  </style>
+  <body>
+    <div class="effectscontainer">
+      <div class="mastercontainer">
+        <h4>MASTER</h4>
+        <div class="slidecontainer">
+          <p>VOL:</p>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="volume"
+          />
+        </div>
+      </div>
+      <div class="wavecontainer">
+        <h4>WAVE</h4>
+        <div class="slidecontainer">
+          <p>SHAPE:</p>
+          <input
+            type="range"
+            id="shape"
+            min="0"
+            value="0"
+            max="3"
+            step="1"
+            list="shapes"
+          />
+          <datalist id="shapes">
+            <option value="0" label="SIN"></option>
+            <option value="1" label="SQU"></option>
+            <option value="2" label="TRI"></option>
+            <option value="3" label="SAW"></option>
+          </datalist>
+        </div>
+        <div class="slidecontainer">
+          <p>WIDTH:</p>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="shape"
+          />
+        </div>
+      </div>
+      <div class="adsrcontainer">
+        <h4>ENVELOPE</h4>
+        <div class="slidecontainer">
+          <p>ATK:</p>
+          <input
+            type="range"
+            min="0"
+            max="2"
+            step="0.1"
+            value="0.25"
+            class="slider"
+            id="attack"
+          />
+        </div>
+        <div class="slidecontainer">
+          <p>DEC:</p>
+          <input
+            type="range"
+            min="0"
+            max="2"
+            step="0.1"
+            value="0"
+            class="slider"
+            id="decay"
+          />
+        </div>
+        <div class="slidecontainer">
+          <p>SUS:</p>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            value="0"
+            class="slider"
+            id="sustain"
+          />
+        </div>
+        <div class="slidecontainer">
+          <p>REL:</p>
+          <input
+            type="range"
+            min="0"
+            max="5"
+            step="0.1"
+            value="1"
+            class="slider"
+            id="release"
+          />
+        </div>
+      </div>
+      <div class="filtercontainer">
+        <h4>FILTER</h4>
+        <div class="slidecontainer">
+          <p>FRQ:</p>
+          <input
+            type="range"
+            min="1"
+            max="440"
+            value="50"
+            class="slider"
+            id="frequency"
+          />
+        </div>
+        <div class="slidecontainer">
+          <p>Q:</p>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="q"
+          />
+        </div>
+      </div>
+      <div class="echocontainer">
+        <h4>ECHO FX</h4>
+        <div class="slidecontainer">
+          <p>TIME:</p>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="time"
+          />
+        </div>
+        <div class="slidecontainer">
+          <p>FBK:</p>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="feedback"
+          />
+        </div>
+      </div>
+    </div>
+    <div id="pianocontainer"></div>
+  </body>
+
+  <script>
     const notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
     const sharpNotes = ['C#', 'D#', 'F#', 'G#', 'A#']
+    const shapes = ['sine', 'square', 'triangle', 'sawtooth']
+    const phaser = new Tone.Phaser({
+      frequency: 15,
+      octaves: 5,
+      baseFrequency: 1000,
+    }).toDestination()
 
-    // const phaser = new Tone.Phaser({
-    //     frequency: 15,
-    //     octaves: 5,
-	//     baseFrequency: 1000
-    // }).toDestination();
+    // const synth = new Tone.FMSynth().toDestination()
 
-    const synth = new Tone.FMSynth().toMaster();    
-    let html = "";
+    let html = ''
     for (let octave = 4; octave <= 5; octave++) {
-        for (let i = 0; i < notes.length; i++) {
-        
-            if (notes[i] === 'E' || notes[i] === 'B') {
-                html += `<div class="whitenote" id=${notes[i] + octave} onmouseup='noteUp(this,false)' onmouseleave='noteUp(this, false)' onmousedown='noteDown(this)'>${notes[i]}</div>`;
-            }
-            else {
-                html += `<div class="whitenote" id=${notes[i] + octave} onmouseleave='noteUp(this, false)' onmouseup='noteUp(this, false)' onmousedown='noteDown(this)'>
-                    <div class="blacknote" id="${notes[i]}#${octave}" onmouseleave='noteUp(this, true)' onmouseup='noteUp(this, true)' onmousedown='noteDown(this)'>${notes[i]}#</div>
-                    ${notes[i]}
-                    </div>`;
-            }
-        }
-    }
-    document.getElementById('container').innerHTML = html;
-
-    const noteUp = (elem, isSharp) => { 
-        if (isSharp) {
-            elem.style.background = 'black';
+      for (let i = 0; i < notes.length; i++) {
+        if (notes[i] === 'E' || notes[i] === 'B') {
+          html += `<div class="whitenote" id=${
+            notes[i] + octave
+          } onmouseup='noteUp(this,false)' onmouseleave='noteUp(this, false)' onmousedown='noteDown(this)'>${
+            notes[i]
+          }</div>`
         } else {
-            elem.style.background = 'white';
+          html += `<div class="whitenote" id=${
+            notes[i] + octave
+          } onmouseleave='noteUp(this, false)' onmouseup='noteUp(this, false)' onmousedown='noteDown(this)'>
+                    <div class="blacknote" id="${
+                      notes[i]
+                    }#${octave}" onmouseleave='noteUp(this, true)' onmouseup='noteUp(this, true)' onmousedown='noteDown(this)'>${
+            notes[i]
+          }#</div>
+                    ${notes[i]}
+                    </div>`
         }
+      }
     }
+    document.getElementById('pianocontainer').innerHTML = html
+    let osc = new Tone.Oscillator()
 
+    const noteUp = (elem, isSharp) => {
+      if (isSharp) {
+        elem.style.background = 'black'
+      } else {
+        elem.style.background = 'white'
+      }
+      osc.stop()
+    }
 
     const noteDown = (elem) => {
-        elem.style.background = '#777';
-        synth.triggerAttackRelease(elem.id, "16n");
-        event.stopPropagation();
-    }
+      elem.style.background = '#777'
+      //   synth.triggerAttackRelease(elem.id, '16n')
+      const poly = new Tone.PolySynth().toDestination()
+      poly.set({
+        envelope: {
+          attack: document.getElementById('attack').value,
+          decay: document.getElementById('decay'.value),
+          sustain: document.getElementById('sustain').value,
+          release: document.getElementById('release').value,
+        },
+        oscillator: {
+          type: shapes[document.getElementById('shape').value],
+        },
+      })
+      poly.triggerAttackRelease(elem.id, 0.2)
+      //   osc.frequency = document.getElementById('frequency').value
+      //   let analyser = new Tone.Analyser('waveform', 128)
 
-</script>
+      event.stopPropagation()
+    }
+  </script>
 </html>
