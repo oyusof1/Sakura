@@ -3,6 +3,7 @@ const notes = ["C", "D", "E", "F", "G", "A", "B"];
 const sharpNotes = ["C#", "D#", "F#", "G#", "A#"];
 const shapes = ["sine", "square", "triangle", "sawtooth"];
 let synth = new Tone.PolySynth().toDestination();
+let sequence;
 let player, analyser;
 let playing = false;
 let r, g, b, a;
@@ -87,6 +88,25 @@ const noteDown = (elem) => {
   redraw();
   if (document.getElementById("volume").value === -60) return;
   synth.triggerAttack(elem.id);
+};
+
+//sequencer setup
+const playSequence = () => {
+  if (playing) {
+    playing = false;
+    sequence.stop();
+    Tone.Transport.stop();
+  } else {
+    // We do this by creating an array of indices [ 0, 1, 2 ... 15 ]
+    const noteIndices = newArray(numCols);
+    // create the sequence, passing onSequenceStep function
+    sequence = new Tone.Sequence(onSequenceStep, noteIndices, "16n");
+
+    // Start the sequence and Transport loop
+    playing = true;
+    sequence.start();
+    Tone.Transport.start();
+  }
 };
 
 // p5 canvas and visualizer
