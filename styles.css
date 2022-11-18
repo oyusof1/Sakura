@@ -1,0 +1,212 @@
+@import url(https://fonts.googleapis.com/css?family=VT323);
+
+html,
+body {
+  max-height: 100%;
+}
+
+h4 {
+  margin-bottom: 0;
+}
+
+p {
+  margin: 10px;
+}
+
+body {
+  zoom: 0.95;
+  background: #b35f5f;
+  /* background: linear-gradient(
+    90deg,
+    rgba(246, 240, 196, 1) 29%,
+    rgba(217, 158, 192, 1) 93%
+  ); */
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+p {
+  text-align: center;
+}
+
+.title {
+  font-family: "Princess Sofia", cursive;
+  color: #ff88e1;
+  font-size: 500%;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
+
+#pianocontainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.whitenote {
+  display: flex;
+  width: 50px;
+  height: 100px;
+  background-color: white;
+  border: 1px solid;
+  float: left;
+  text-align: left;
+  padding: 1rem;
+  align-items: flex-end;
+  border-radius: 0.5rem;
+}
+
+.blacknote {
+  display: flex;
+  padding: 10px;
+  color: white;
+  position: relative;
+  left: 3em;
+  bottom: 2.3rem;
+  z-index: 1;
+  width: 50px;
+  height: 60px;
+  background-color: black;
+  align-items: flex-end;
+  border-radius: 0.5rem;
+}
+
+datalist {
+  display: flex;
+  flex-direction: row;
+}
+
+.visualizer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wavecontainer {
+  text-align: center;
+}
+
+canvas {
+  border-radius: 1rem;
+}
+
+.effectscontainer {
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
+  font-family: "VT323", monospace;
+  font-size: 24px;
+}
+
+.adsrcontainer {
+  display: inline-flex;
+}
+
+.adsrcontrol {
+  margin: 0 10px 0;
+}
+
+.middlecontainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.envelopecontainer {
+  display: inline-flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.filtercontainer {
+  display: inline-flex;
+}
+
+.slidecontainer {
+  padding: 1.3rem;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.squencercontainer {
+  background-color: #ffb888;
+  box-shadow: 4px 4px 4px black;
+  border: 1px black solid;
+  border-radius: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  padding-top: 0;
+  font-family: "VT323", monospace;
+  font-size: 24px;
+}
+
+.center {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  font-family: "VT323", monospace;
+  font-size: 24px;
+}
+
+.squencercontrols {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.sequencerbox {
+  background-color: #b35f9e;
+  color: black;
+  text-align: center;
+  border: 1px black solid;
+  border-radius: 0.2rem;
+  padding: 0.7rem;
+  margin: 0.5rem;
+  width: 2rem;
+}
+
+.btn {
+  background: black;
+  border-bottom: 6px inset rgba(0, 0, 0, 0.5);
+  border-left: 6px inset rgba(0, 0, 0, 0.5);
+  border-right: 6px inset rgba(255, 255, 255, 0.5);
+  border-top: 6px inset rgba(255, 255, 255, 0.5);
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 2rem;
+  margin: 1rem;
+  min-width: 100px;
+  padding: 0.5rem;
+  text-transform: uppercase;
+  width: auto;
+}
+
+.btn:hover {
+  background: #bcbcbc;
+}
+
+.btn-primary {
+  background: #ff8888;
+}
+.btn-primary:focus,
+.btn-primary:hover {
+  background: #ff6c6c;
+}
+
+.container {
+  top: 3rem;
+  position: relative;
+}
