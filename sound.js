@@ -97,17 +97,27 @@ const playSequence = () => {
     sequence.stop();
     Tone.Transport.stop();
   } else {
-    // We do this by creating an array of indices [ 0, 1, 2 ... 15 ]
-    const noteIndices = newArray(numCols);
-    // create the sequence, passing onSequenceStep function
-    sequence = new Tone.Sequence(onSequenceStep, noteIndices, "16n");
-
-    // Start the sequence and Transport loop
+    sequence = new Tone.Sequence(
+      (time, note) => {
+        synth.triggerAttackRelease(note, 0.1, time);
+      },
+      ["C4", ["E4", "D4", "E4"], "G4", ["A4", "G4"]]
+    ).start(0);
     playing = true;
     sequence.start();
     Tone.Transport.start();
   }
 };
+
+document.getElementById("playBtn").addEventListener("click", () => {
+  playing = false;
+  playSequence();
+});
+
+document.getElementById("stopBtn").addEventListener("click", () => {
+  playing = true;
+  playSequence();
+});
 
 // p5 canvas and visualizer
 async function setup() {
