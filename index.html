@@ -22,7 +22,9 @@
     />
   </head>
   <body>
-    <h1 class="title">Sakura</h1>
+    <div class="title">
+        <img src="sakura.png" width="300px"/>
+    </div>
     <div class="effectscontainer">
       <div class="mastercontainer">
         <h4>MASTER</h4>
@@ -199,6 +201,7 @@
         <div class="squencercontainer">
           <div class="squencercontrols">
             <button id="playBtn" class="btn btn-primary">Play</button>
+            <button id="resetBtn" class="btn">Reset</button>
             <button id="stopBtn" class="btn">Stop</button>
           </div>
           <div class="row">
@@ -220,6 +223,9 @@
             <div class="sequencerbox">14</div>
             <div class="sequencerbox">15</div>
             <div class="sequencerbox">16</div>
+          </div>
+          <div class="row">
+            <p id="error" style="color: red;" hidden>Unable to start sequencer, please fill all 16 boxes </p>
           </div>
         </div>
       </div>

@@ -34,9 +34,9 @@ p {
 }
 
 .title {
-  font-family: "Princess Sofia", cursive;
-  color: #ff88e1;
-  font-size: 500%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   margin-top: 15px;
   margin-bottom: 0px;
@@ -209,4 +209,14 @@ button {
 .container {
   top: 3rem;
   position: relative;
+}
+
+.selected {
+  background: #e8db4e;
+}
+
+@media screen and (min-width: 1200px) {
+  body {
+    zoom: 0.8;
+  }
 }

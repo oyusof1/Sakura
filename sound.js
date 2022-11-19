@@ -3,11 +3,12 @@ const notes = ["C", "D", "E", "F", "G", "A", "B"];
 const sharpNotes = ["C#", "D#", "F#", "G#", "A#"];
 const shapes = ["sine", "square", "triangle", "sawtooth"];
 let synth = new Tone.PolySynth().toDestination();
-let sequence;
-let player, analyser;
+let sequence, orgSequencer= [], sequencerNotes = [];
+let player, analyser, timeoutID;;
 let playing = false;
 let r, g, b, a;
 let html = "";
+document.querySelectorAll(".sequencerbox").forEach(x => orgSequencer.push(x.innerHTML))
 
 //create piano
 for (let octave = 4; octave <= 5; octave++) {
@@ -69,6 +70,12 @@ document.querySelectorAll("webaudio-knob, webaudio-slider").forEach((item) => {
   });
 });
 
+document.querySelectorAll(".sequencerbox").forEach((item) => {
+  item.addEventListener("click", (event) => {
+    item.classList.add('selected')
+  })
+})
+
 //piano events
 const noteUp = (elem, isSharp) => {
   if (isSharp) {
@@ -81,27 +88,36 @@ const noteUp = (elem, isSharp) => {
 };
 
 const noteDown = (elem) => {
-  elem.style.background = "#777";
+  let selected = document.querySelectorAll(".selected");
   event.stopPropagation();
-  playing = true;
-  background(0);
-  redraw();
-  if (document.getElementById("volume").value === -60) return;
-  synth.triggerAttack(elem.id);
+  if (selected.length > 0) {
+    selected[0].innerHTML = elem.id;
+    sequencerNotes.push(elem.id);
+    selected[0].classList.remove('selected');
+  } else {
+    elem.style.background = "#777";
+    playing = true;
+    background(0);
+    redraw();
+    if (document.getElementById("volume").value === -60) return;
+    synth.triggerAttack(elem.id);
+  }
 };
 
 //sequencer setup
 const playSequence = () => {
   if (playing) {
     playing = false;
-    sequence.stop();
-    Tone.Transport.stop();
+    if (sequence !== undefined) {
+      sequence.stop();
+      Tone.Transport.stop();
+    }
   } else {
     sequence = new Tone.Sequence(
       (time, note) => {
         synth.triggerAttackRelease(note, 0.1, time);
       },
-      ["C4", ["E4", "D4", "E4"], "G4", ["A4", "G4"]]
+      sequencerNotes
     ).start(0);
     playing = true;
     sequence.start();
@@ -109,14 +125,34 @@ const playSequence = () => {
   }
 };
 
+ const delayedMessage = () => {
+  timeoutID = setTimeout(() => {
+    document.getElementById("error").hidden = true;
+  }, 4000);
+}
+
 document.getElementById("playBtn").addEventListener("click", () => {
-  playing = false;
-  playSequence();
+  if (sequencerNotes.length < 15) {
+    document.getElementById("error").hidden = false;
+    delayedMessage();
+  } else {
+    playing = false;
+    playSequence();
+  }
 });
 
 document.getElementById("stopBtn").addEventListener("click", () => {
   playing = true;
   playSequence();
+  
+});
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  let currSequencer = document.querySelectorAll('.sequencerbox');
+  for (let i = 0; i < currSequencer.length; i++) {
+    currSequencer[i].innerHTML = orgSequencer[i];
+  }
+  sequencerNotes = [];
 });
 
 // p5 canvas and visualizer
@@ -133,8 +169,6 @@ function draw() {
   if (!player || !analyser) return;
 
   background(0, 0, 0, 10);
-
-  //   strokeWeight(dim * 0.0025);
 
   r = random(255);
   g = random(255);
