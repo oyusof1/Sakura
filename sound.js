@@ -3,12 +3,20 @@ const notes = ["C", "D", "E", "F", "G", "A", "B"];
 const sharpNotes = ["C#", "D#", "F#", "G#", "A#"];
 const shapes = ["sine", "square", "triangle", "sawtooth"];
 let synth = new Tone.PolySynth().toDestination();
-let sequence, orgSequencer= [], sequencerNotes = [];
-let player, analyser, timeoutID;;
+let sequence,
+  orgSequencer = [],
+  sequencerNotes = [];
+let player, analyser, timeoutID;
 let playing = false;
-let r, g, b, a;
+let r,
+  g,
+  b,
+  a,
+  count = 0;
 let html = "";
-document.querySelectorAll(".sequencerbox").forEach(x => orgSequencer.push(x.innerHTML))
+document
+  .querySelectorAll(".sequencerbox")
+  .forEach((x) => orgSequencer.push(x.innerHTML));
 
 //create piano
 for (let octave = 4; octave <= 5; octave++) {
@@ -72,9 +80,9 @@ document.querySelectorAll("webaudio-knob, webaudio-slider").forEach((item) => {
 
 document.querySelectorAll(".sequencerbox").forEach((item) => {
   item.addEventListener("click", (event) => {
-    item.classList.add('selected')
-  })
-})
+    item.classList.add("selected");
+  });
+});
 
 //piano events
 const noteUp = (elem, isSharp) => {
@@ -92,8 +100,8 @@ const noteDown = (elem) => {
   event.stopPropagation();
   if (selected.length > 0) {
     selected[0].innerHTML = elem.id;
-    sequencerNotes.push(elem.id);
-    selected[0].classList.remove('selected');
+    sequencerNotes.push(selected[0]);
+    selected[0].classList.remove("selected");
   } else {
     elem.style.background = "#777";
     playing = true;
@@ -115,9 +123,16 @@ const playSequence = () => {
   } else {
     sequence = new Tone.Sequence(
       (time, note) => {
+        if (count === 16) {
+          count = 0;
+        }
         synth.triggerAttackRelease(note, 0.1, time);
+        sequencerNotes
+          .find((x, index) => x.innerHTML === note && index === count)
+          .classList.toggle("playing");
+        count++;
       },
-      sequencerNotes
+      sequencerNotes.map((x) => x.innerHTML)
     ).start(0);
     playing = true;
     sequence.start();
@@ -125,11 +140,11 @@ const playSequence = () => {
   }
 };
 
- const delayedMessage = () => {
+const delayedMessage = () => {
   timeoutID = setTimeout(() => {
     document.getElementById("error").hidden = true;
   }, 4000);
-}
+};
 
 document.getElementById("playBtn").addEventListener("click", () => {
   if (sequencerNotes.length < 15) {
@@ -144,13 +159,16 @@ document.getElementById("playBtn").addEventListener("click", () => {
 document.getElementById("stopBtn").addEventListener("click", () => {
   playing = true;
   playSequence();
-  
 });
 
 document.getElementById("resetBtn").addEventListener("click", () => {
-  let currSequencer = document.querySelectorAll('.sequencerbox');
+  playing = true;
+  playSequence();
+  let currSequencer = document.querySelectorAll(".sequencerbox");
   for (let i = 0; i < currSequencer.length; i++) {
     currSequencer[i].innerHTML = orgSequencer[i];
+    currSequencer[i].classList.remove("selected");
+    currSequencer[i].classList.remove("playing");
   }
   sequencerNotes = [];
 });
