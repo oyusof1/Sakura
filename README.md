@@ -4,9 +4,6 @@
 
 - [Overview](#overview)
 - [Built With](#built-with)
-- [Features](#features)
-- [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
 
 ## Overview
 This is a simple synthesizer with a playable keyboard and basic controls that can edit an ADSR envelope, adjust volume, change wave shapes and width, etc. A squencer box is
