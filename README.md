@@ -20,3 +20,10 @@ Visit at https://oyusof1.github.io/Synthesizer/
 - VanillaJS
 - Tone.js
 - p5.js 
+
+### Backlog/Bugs
+
+- Need to make website responsive
+- Echo and Freq controls not attached to AudioContext 
+- Sequencer play button can be pressed while already playing
+- Starting sequence after hitting stop will start from beginning regardless of note stopped on
