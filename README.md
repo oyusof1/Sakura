@@ -6,8 +6,7 @@
 - [Built With](#built-with)
 
 ## Overview
-This is a simple synthesizer with a playable keyboard and basic controls that can edit an ADSR envelope, adjust volume, change wave shapes and width, etc. A squencer box is
-also available to set a 16 note sqeuence in memory to playback in a loop. The visualizer will display the waveform of any audio played. 
+This is a simple synthesizer with a playable keyboard and basic controls that can edit an ADSR envelope, adjust volume, change wave shapes and width, etc. A sequencer box is also available to set a 16 note sequence in memory to playback in a loop. The visualizer will display the waveform of any audio played.
 
 Visit at https://oyusof1.github.io/Synthesizer/
 
