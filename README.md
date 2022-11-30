@@ -8,7 +8,7 @@
 ## Overview
 This is a simple synthesizer with a playable keyboard and basic controls that can edit an ADSR envelope, adjust volume, change wave shapes and width, etc. A sequencer box is also available to set a 16 note sequence in memory to playback in a loop. The visualizer will display the waveform of any audio played.
 
-Visit at https://oyusof1.github.io/Synthesizer/
+Visit at https://oyusof1.github.io/Sakura/
 
 <img width="1508" alt="image" src="https://user-images.githubusercontent.com/77765671/204092939-d8a1dfff-8ccb-4fb7-8cc7-245f8fbee219.png">
 
